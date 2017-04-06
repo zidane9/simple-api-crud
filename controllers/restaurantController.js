@@ -1,29 +1,30 @@
 'use strict'
 
-let Food = require('../models/food');
+let Restaurant = require('../models/restaurant');
 
 let getAll = function (req, res, next) {
-  Food.find(function (err, foods){
+  Restaurant.find(function (err, restaurants){
     if(err){
       res.json({error: err});
     } else {
-      res.json(foods);
+      res.json(restaurants);
     }
   })
 };
 
 let getOne = function(req,res,next){
-  Food.findOne({_id: req.params.id}, function (err, food) {
+  Restaurant.findOne({_id: req.params.id}, function (err, restaurant) {
     if (err) return handleError(err);
-    res.send(food);
+    res.send(restaurant);
   })
 };
 
 let createOne = function (req, res, next) {
-  Food.create({
+  Restaurant.create({
     name : req.body.name,
-    price : req.body.price,
-    expired_date : new Date(req.body.expired_date)
+    owner : req.body.owner,
+    address : req.body.address,
+    open_status : req.body.open_status,
   }, function (error, food){
     if(error) throw error;
     res.send(food);
@@ -33,17 +34,18 @@ let createOne = function (req, res, next) {
 let update = function (req, res, next) {
   let temp = {
     name : req.body.name,
-    price : req.body.price,
-    expired_date : new Date(req.body.expired_date)
+    owner : req.body.owner,
+    address : req.body.address,
+    open_status : req.body.open_status,
   }
-  Food.update({ _id: req.params.id }, { $set: temp}, function(err, response){
+  Restaurant.update({ _id: req.params.id }, { $set: temp}, function(err, response){
     if(err) res.send(err);
     res.send(response);
   });
 };
 
 let deleteOne = function (req, res, next) {
-  Food.findOne({_id: req.params.id}).remove(function(err, response){
+  Restaurant.findOne({_id: req.params.id}).remove(function(err, response){
     if(err) res.send(err);
     res.send(response);
   });
