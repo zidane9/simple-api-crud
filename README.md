@@ -15,13 +15,14 @@ List of food routes:
 
 List of restaurant routes:
 
-|      Route       |  HTTP  |            Description            |
-| ---------------- | ------ | --------------------------------- |
-| /restaurants     | GET    | Get all restaurants               |
-| /restaurants     | POST   | Create a restaurant               |
-| /restaurants/:id | DELETE | Delete a restaurant               |
-| /restaurants/:id | PUT    | Update a restaurant with new info |
-| /restaurants/:id | GET    | Get a restaurant                  |
+|         Route         |  HTTP  |                Description                 |
+| --------------------- | ------ | ------------------------------------------ |
+| /restaurants          | GET    | Get all restaurants                        |
+| /restaurants          | POST   | Create a restaurant                        |
+| /restaurants/:id      | DELETE | Delete a restaurant                        |
+| /restaurants/:id      | PUT    | Update a restaurant with new info          |
+| /restaurants/:id      | GET    | Get a restaurant                           |
+| /restaurants/menu/:id | POST   | Add a new food to the menu of a restaurant |
 
 ### Usage
 With only npm:

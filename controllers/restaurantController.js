@@ -3,7 +3,9 @@
 let Restaurant = require('../models/restaurant');
 
 let getAll = function (req, res, next) {
-  Restaurant.find(function (err, restaurants){
+  Restaurant.find()
+  .populate('menu')
+  .exec(function (err, restaurants) {
     if(err){
       res.json({error: err});
     } else {
@@ -13,9 +15,14 @@ let getAll = function (req, res, next) {
 };
 
 let getOne = function(req,res,next){
-  Restaurant.findOne({_id: req.params.id}, function (err, restaurant) {
-    if (err) return handleError(err);
-    res.send(restaurant);
+  Restaurant.findOne({_id: req.params.id})
+  .populate('menu')
+  .exec(function (err, restaurant) {
+    if(err){
+      res.json({error: err});
+    } else {
+      res.json(restaurant);
+    }
   })
 };
 
@@ -28,6 +35,22 @@ let createOne = function (req, res, next) {
   }, function (error, food){
     if(error) throw error;
     res.send(food);
+  })
+};
+
+let addMenu = function (req, res, next) {
+  Restaurant.findOne({_id: req.params.id}, function (err, restaurant) {
+    if (err) return handleError(err);
+
+    let menuResto = restaurant.menu;
+    menuResto.push(req.body.food);
+    let temp = {
+      menu : menuResto
+    };
+    Restaurant.update({ _id: req.params.id }, { $set: temp}, function(err, response){
+      if(err) res.send(err);
+      res.send(response);
+    });
   })
 };
 
@@ -55,6 +78,7 @@ module.exports = {
   getAll,
   getOne,
   createOne,
+  addMenu,
   update,
   deleteOne
 }

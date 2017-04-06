@@ -14,4 +14,6 @@ router.put('/:id', controller.update);
 
 router.delete('/:id', controller.deleteOne);
 
+router.post('/menu/:id', controller.addMenu);
+
 module.exports = router;
